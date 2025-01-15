@@ -4,6 +4,9 @@ import requireImport from "./util/import";
 export default function createFS(): MoonlightFS {
   const fs = requireImport("fs");
   const path = requireImport("path");
+  const os = requireImport("os");
+
+  const tilde_regex = /^~(?=($|\/))/i;
 
   return {
     async readFile(path) {
@@ -48,6 +51,11 @@ export default function createFS(): MoonlightFS {
     },
     dirname(dir) {
       return path.dirname(dir);
+    },
+    resolvePath(path) {
+      const match = path.match(tilde_regex);
+      if (match) path = os.homedir() + path.slice(match[0].length);
+      return path;
     }
   };
 }

@@ -15,4 +15,5 @@ export type MoonlightFS = {
 
   join: (...parts: string[]) => string;
   dirname: (path: string) => string;
+  resolvePath: (path: string) => string;
 };
